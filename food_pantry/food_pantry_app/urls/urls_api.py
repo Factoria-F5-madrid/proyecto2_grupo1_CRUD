@@ -1,0 +1,1 @@
+# In here we place the URLs for the API (Swagger)
