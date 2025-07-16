@@ -17,13 +17,29 @@ Including another URLconf
 
 from django.urls import include, path
 from django.contrib import admin
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
 
+from .swagger import CustomOpenAPISchemaGenerator
 
-
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Food Pantry API",
+        default_version='v1',
+        description="A list of public APIs available for the Food Pantry.",
+        #terms_of_service="https://www.example.com/terms/",
+        #contact=openapi.Contact(email="contact@example.com"),
+        #license=openapi.License(name="Awesome License"),
+    ),
+    generator_class=CustomOpenAPISchemaGenerator,
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('food_pantry/', include('food_pantry_app.urls.urls_app')),
-    #path('food_pantry/api', urls) TODO. Change this to the right file
-    #path('food_pantry/doc', )      TODO.  to be completed
+    path('food_pantry/api/', include('food_pantry_app.urls.urls_api')),
+    path('food_pantry/api/doc/',schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
 ]

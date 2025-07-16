@@ -5,6 +5,6 @@ from ..views.food_pantry_app_home_view import FoodPantryAppHomeView
 
     
 urlpatterns = [
-    path('', FoodPantryAppHomeView.as_view())
+    path('', FoodPantryAppHomeView.as_view(), name="home-page"),
 ]
     
