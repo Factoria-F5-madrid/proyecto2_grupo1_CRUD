@@ -31,7 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'food_pantry_app',  # Your food pantry app
+    'food_pantry_app',              # Your food pantry app
+    'donors_api',                   # All API related operations for the Donor table
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +42,15 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
 ]
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Basic': {
+            'type': 'basic'
+        }
+    },
+    'DEFAULT_MODEL_RENDERING': 'example',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
