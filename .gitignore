@@ -15,9 +15,6 @@ local_settings.py
 **/migrations/*
 !**/migrations/__init__.py
 
-**/xyz/*
-!**/xyz/123
-
 # Archivos de sistema
 .DS_Store
 
