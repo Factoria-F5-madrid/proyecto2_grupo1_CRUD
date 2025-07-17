@@ -10,7 +10,7 @@ from donors_api.models import Donor
 from donors_api.serializer import DonorResponse, DonorRequest
 
 
-class DonorsBulkView(APIView):
+class DonorsView(APIView):
     @swagger_auto_schema(
         tags=['Donors'],
         operation_description="List all donors",
@@ -20,6 +20,14 @@ class DonorsBulkView(APIView):
         }
     )    
     def get(self, request: Request, *args, **kwargs):
+        """_summary_
+
+        Args:
+            request (Request): _description_
+
+        Returns:
+            _type_: _description_
+        """
         donors = Donor.objects.all().values()
         response = DonorResponse(donors, many = True)
         return Response(response.data, status=status.HTTP_200_OK)
@@ -34,6 +42,14 @@ class DonorsBulkView(APIView):
         }
     )
     def post(self, request: Request, *args, **kwargs):
+        """_summary_
+
+        Args:
+            request (Request): _description_
+
+        Returns:
+            _type_: _description_
+        """
         data = DonorRequest(data=request.data)
         
         if data.is_valid():

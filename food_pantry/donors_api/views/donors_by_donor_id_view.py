@@ -8,7 +8,7 @@ from donors_api.models import Donor
 from donors_api.serializer import DonorResponse, DonorRequest
 
 
-class DonorsSingleView(APIView):
+class DonorsByDonorIdView(APIView):
     def __get_object(self, todo_id):
         """_summary_
 
