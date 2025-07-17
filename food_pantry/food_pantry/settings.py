@@ -33,6 +33,13 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'food_pantry_app',              # Your food pantry app
     'donors_api',                   # All API related operations for the Donor table
+    'categories_api',               # All API related operations for the Category table
+    'products_api',                 # All API related operations for the Product table
+    'beneficiaries_api',            # All API related operations for the Beneficiary table
+    'deliveries_api',               # All API related operations for the Delivery table
+    'delivery_products_api',        # All API related operations for the DeliveryProduct table
+    'volunteers_api',               # All API related operations for the Volunteer table
+    'volunteer_deliveries_api',     # All API related operations for the VolunteerDelivery table     
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'drf_yasg',
+    'drf_yasg',  # For Swagger documentation
 ]
 
 SWAGGER_SETTINGS = {
