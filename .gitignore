@@ -21,3 +21,9 @@ local_settings.py
 # IDEs
 .vscode/
 .idea/
+
+#Containers (Comment this out to stop synchronizing this)
+#.devcontainer/
+
+#Test
+.pytest_cache/

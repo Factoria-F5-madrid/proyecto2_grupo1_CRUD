@@ -27,7 +27,7 @@ schema_view = get_schema_view(
     openapi.Info(
         title="Food Pantry API",
         default_version='v1',
-        description="A list of public APIs available for the Food Pantry.",
+        description="A list of public APIs available for the Food Pantry application.",
         #terms_of_service="https://www.example.com/terms/",
         #contact=openapi.Contact(email="contact@example.com"),
         #license=openapi.License(name="Awesome License"),
@@ -40,6 +40,10 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('food_pantry/', include('food_pantry_app.urls')),              # Home page entry point
-    path('food_pantry/api/donors/', include('donors_api.urls')),        # Donors API entry point
-    path('food_pantry/api/doc/',schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
+    path('food_pantry/v1/api/', include(
+        [
+            path('donors/', include('donors_api.urls')),
+            path('doc/',schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
+        ]
+    ))
 ]
