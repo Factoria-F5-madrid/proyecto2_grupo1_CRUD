@@ -39,7 +39,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('food_pantry/', include('food_pantry_app.urls.urls_app')),
-    path('food_pantry/api/', include('food_pantry_app.urls.urls_api')),
+    path('food_pantry/', include('food_pantry_app.urls')),              # Home page entry point
+    path('food_pantry/api/donors/', include('donors_api.urls')),        # Donors API entry point
     path('food_pantry/api/doc/',schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
 ]

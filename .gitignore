@@ -10,6 +10,10 @@ __pycache__/
 # Archivos de Django
 #*.sqlite3
 # db.sqlite3 (temporalmente compartida para desarrollo)
+*.log
+local_settings.py
+**/migrations/*
+!**/migrations/__init__.py
 
 # Archivos de sistema
 .DS_Store
