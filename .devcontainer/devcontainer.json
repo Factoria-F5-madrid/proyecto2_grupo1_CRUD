@@ -23,7 +23,8 @@
 				"kevinrose.vsc-python-indent",
 				"mintlify.document",
 				"mhutchie.git-graph",
-				"njpwerner.autodocstring"
+				"njpwerner.autodocstring",
+				"kanindev.new-python-package"
 			]
 		}
 	}
