@@ -9,7 +9,7 @@ from donors_api.serializer import DonorResponseSerializer, DonorRequestSerialize
 
 
 class DonorsByIdView(APIView):
-    def __get_object(self, id) -> Donor:
+    def __get_object(self, id: int) -> Donor:
         """Tries to get a donor by its id. Returns none if not found.
 
         Args:

@@ -43,6 +43,7 @@ urlpatterns = [
     path('food_pantry/v1/api/', include(
         [
             path('donors/', include('donors_api.urls')),
+            path('beneficiaries/', include('beneficiaries_api.urls')),
             path('doc/',schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
         ]
     ))
