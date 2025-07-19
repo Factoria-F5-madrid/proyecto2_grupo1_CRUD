@@ -1,5 +1,5 @@
 from django.db import models
-
+ 
 class Donor(models.Model):
     """_summary_
 
@@ -12,3 +12,5 @@ class Donor(models.Model):
     contact = models.CharField(max_length=180)
     anonymous = models.BooleanField(default=False)
     
+    def __str__(self):
+        return self.name
