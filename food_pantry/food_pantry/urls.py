@@ -40,7 +40,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('food_pantry/', include('food_pantry_app.urls')),              # Home page entry point
-    path('food_pantry/v1/api/', include(
+    path('food_pantry/api/v1/', include(
         [
             path('beneficiaries/', include('beneficiaries_api.urls')),
             path('donors/', include('donors_api.urls')),

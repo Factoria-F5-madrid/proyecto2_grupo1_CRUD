@@ -8,5 +8,5 @@ base_url = ""
 
 urlpatterns = [
     path(base_url, ProductsView.as_view(), name="products"),
-    path(base_url + '<int:product_id>', ProductsByIdView.as_view(), name="product"),
+    path(base_url + '<int:id>', ProductsByIdView.as_view(), name="product"),
 ]
