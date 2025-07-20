@@ -16,7 +16,7 @@ class VolunteerByIdView(APIView):
             id (int): Id of the volunteer to retrieve
 
         Returns:
-            Donor: A volunteer or None
+            Volunteer: A volunteer or None
         """
         try:
             return Volunteer.objects.get(id=id)
@@ -29,8 +29,8 @@ class VolunteerByIdView(APIView):
             return None
         
     @swagger_auto_schema(
-        tags=['Donors'],
-        operation_description="List the donor with id {id}",
+        tags=['Volunteers'],
+        operation_description="List the volunteer with id {id}",
         responses={
             200: VolunteerResponseSerializer(many = False),
             400: "Bad Request"
