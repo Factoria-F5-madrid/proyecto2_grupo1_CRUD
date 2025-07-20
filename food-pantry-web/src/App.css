@@ -1,0 +1,66 @@
+
+/* App.css */
+.App {
+  text-align: center;
+  background-color: #8ce0d1; /* Un color de fondo oscuro para el ejemplo */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Alinea al inicio para que el header esté arriba */
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  width: 100%; /* Ocupa todo el ancho */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.texto1 {
+  font-size: calc(10px + 2vmin); /* Tamaño de fuente adaptable */
+  color: #333;
+  /* margin: 20px; Este margen externo puede causar problemas al centrar con auto*/
+  text-align: center; /* Centra el texto dentro del cuadro */
+  font-family: 'Arial', sans-serif;
+  line-height: 1.5;
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con más opacidad (80%) */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  max-width: 600px; /* Ancho máximo del cuadro de texto */
+
+  /* --- CAMBIOS CLAVE PARA CENTRAR EL CUADRO --- */
+  margin: 15px auto; /* Centra el bloque horizontalmente y añade margen vertical */
+  display: block; /* Asegura que el elemento se comporte como un bloque para que margin: auto funcione */
+}
+
+.cute-gradient-divider {
+  width: 200px; /* Ancho de la barra, ajústalo */
+  height: 8px; /* Altura/grosor de la barra */
+  background: linear-gradient(to right, #b8e0d4, #a7d9b9, #99c2a2); /* Degradado de verdes/azules suaves */
+  margin: 50px auto; /* Centra y espacia la barra */
+  border-radius: 9999px; /* Bordes completamente redondeados */
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.15); /* Sombra un poco más pronunciada */
+}
