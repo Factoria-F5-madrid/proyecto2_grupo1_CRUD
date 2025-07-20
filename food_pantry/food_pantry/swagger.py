@@ -14,12 +14,16 @@ class CustomOpenAPISchemaGenerator(OpenAPISchemaGenerator):
         swagger = super().get_schema(request, public)
         swagger.tags = [
             {
+                "name": "Beneficiaries",
+                "description": "List of all APIs available for beneficiary operations."
+            },
+            {
                 "name": "Donors",
                 "description": "List of all APIs available for donor operations."
             },
             {
-                "name": "Beneficiaries",
-                "description": "List of all APIs available for beneficiary operations."
+                "name": "Products",
+                "description": "List of all APIs available for product operations."
             },
             {
                 "name": "Volunteers",
@@ -27,4 +31,3 @@ class CustomOpenAPISchemaGenerator(OpenAPISchemaGenerator):
             }
         ]
         return swagger
-
