@@ -7,8 +7,9 @@ from drf_yasg.utils import swagger_auto_schema
 
 from deliveries_api.models import Delivery
 from deliveries_api.serializer import DeliveryRequestSerializer, DeliveryResponseSerializer 
+from common.logger import Logger
 
-class DeliveriesByIdView(APIView):
+class DeliveriesByIdView(Logger, APIView):
     def __get_object(self, id: int) -> Delivery:
         """Tries to get a delivery by its id. Returns none if not found.
 
@@ -19,8 +20,10 @@ class DeliveriesByIdView(APIView):
             Delivery: A delivery or None
         """
         try:
+            self.debug(f"Getting a delivery from the database with id {id}.")
             return Delivery.objects.get(id=id)
         except Delivery.DoesNotExist:
+            self.warning(f"Delivery with id {id} not found in the database.")
             return None
         
 
@@ -42,7 +45,7 @@ class DeliveriesByIdView(APIView):
         Returns:
             Response: JSON of delivery if found
         """
-        
+        self.debug(f"Getting delivery with id {id}.")
         delivery = self.__get_object(id)
         
         if not delivery:
@@ -73,7 +76,7 @@ class DeliveriesByIdView(APIView):
         Returns:
             Response: JSON of delivery updated
         """
-        
+        self.debug(f"Updating delivery with id {id}.")
         delivery = self.__get_object(id)
         if not delivery:
             return Response({
@@ -116,7 +119,7 @@ class DeliveriesByIdView(APIView):
         Returns:
             Response: JSON with the result of the operation
         """
-        
+        self.debug(f"Deleting delivery with id {id}.")
         delivery = self.__get_object(id)
         
         if not delivery:

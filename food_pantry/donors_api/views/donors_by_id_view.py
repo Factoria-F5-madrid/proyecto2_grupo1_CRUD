@@ -6,9 +6,10 @@ from drf_yasg.utils import swagger_auto_schema
 
 from donors_api.models import Donor
 from donors_api.serializer import DonorResponseSerializer, DonorRequestSerializer
+from common.logger import Logger
 
 
-class DonorsByIdView(APIView):
+class DonorsByIdView(Logger, APIView):
     def __get_object(self, id: int) -> Donor:
         """Tries to get a donor by its id. Returns none if not found.
 
@@ -18,9 +19,11 @@ class DonorsByIdView(APIView):
         Returns:
             Donor: A donor or None
         """
+        self.debug(f"Getting a donor from database with id: {id}")
         try:
             return Donor.objects.get(id=id)
         except Donor.DoesNotExist:
+            self.warning(f"Donor with id: {id} not found.")
             return None
         
     @swagger_auto_schema(
@@ -41,7 +44,7 @@ class DonorsByIdView(APIView):
         Returns:
             Response: JSON of donor if found
         """
-        
+        self.debug(f"Getting donor with id: {id}")
         donor = self.__get_object(id)
         
         if not donor:
@@ -72,7 +75,7 @@ class DonorsByIdView(APIView):
         Returns:
             Response: JSON of donor updated
         """
-        
+        self.debug(f"Updating donor with id: {id}.")
         donor = self.__get_object(id)
         if not donor:
             return Response({
@@ -106,7 +109,7 @@ class DonorsByIdView(APIView):
         Returns:
             Response: JSON with the result of the operation
         """
-        
+        self.warning(f"Deleting donor with id: {id}.")
         donor = self.__get_object(id)
         
         if not donor:

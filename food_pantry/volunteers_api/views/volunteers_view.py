@@ -6,10 +6,11 @@ from drf_yasg.utils import swagger_auto_schema
 
 from volunteers_api.models import Volunteer
 from volunteers_api.serializer import VolunteerResponseSerializer, VolunteerRequestSerializer
+from common.logger import Logger
 
 
 
-class VolunteersView(APIView):
+class VolunteersView(Logger, APIView):
     @swagger_auto_schema(
         tags=['Volunteers'],
         operation_description="List all volunteers",
@@ -27,6 +28,7 @@ class VolunteersView(APIView):
         Returns:
             Response: JSON will all volunteers
         """
+        self.debug(f"Getting all volunteers")
         volunteers = Volunteer.objects.all().values()
         response = VolunteerResponseSerializer(volunteers, many = True)
         return Response(response.data, status=status.HTTP_200_OK)
@@ -49,9 +51,12 @@ class VolunteersView(APIView):
         Returns:
             Response: JSON with the response
         """
+        self.debug(f"Create volunteer: {request.data}.")
         data = VolunteerRequestSerializer(data=request.data)
         
         if data.is_valid():
             data.save()
             return Response(data.data, status=status.HTTP_201_CREATED)
+        
+        self.debug(f"Could not create volunteer: {data.errors}.")
         return Response(data.errors, status=status.HTTP_400_BAD_REQUEST)

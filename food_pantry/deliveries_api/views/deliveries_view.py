@@ -6,8 +6,9 @@ from drf_yasg.utils import swagger_auto_schema
 
 from deliveries_api.models import Delivery
 from deliveries_api.serializer import DeliveryRequestSerializer, DeliveryResponseSerializer
+from common.logger import Logger
 
-class DeliveriesView(APIView):
+class DeliveriesView(Logger, APIView):
     @swagger_auto_schema(
         tags=['Deliveries'],
         operation_description="List all deliveries",
@@ -25,6 +26,7 @@ class DeliveriesView(APIView):
         Returns:
             Response: JSON with all deliveries
         """
+        self.debug(f"Getting all deliveries.")
         deliveries = Delivery.objects.all()
         response = DeliveryResponseSerializer(deliveries, many=True)
         return Response(response.data, status=status.HTTP_200_OK)
@@ -47,6 +49,7 @@ class DeliveriesView(APIView):
         Returns:
             Response: JSON with the response
         """
+        self.debug(f"Creating delivery: {request.data}.")
         data = DeliveryRequestSerializer(data=request.data)
 
         """If no address is provided, the beneficiary's address is used."""
@@ -77,6 +80,7 @@ class DeliveriesView(APIView):
             return Response(response_data.data, status=status.HTTP_201_CREATED)
         
         # If validation fails, return errors
+        self.debug(f"Data validation failed.")
         return Response(data.errors, status=status.HTTP_400_BAD_REQUEST)
     
         

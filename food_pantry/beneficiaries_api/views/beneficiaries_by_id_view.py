@@ -6,9 +6,10 @@ from drf_yasg.utils import swagger_auto_schema
 
 from beneficiaries_api.models import Beneficiary
 from beneficiaries_api.serializer import BeneficiaryRequestSerializer, BeneficiaryResponseSerializer
+from common.logger import Logger
 
 
-class BeneficiariesByIdView(APIView):
+class BeneficiariesByIdView(Logger, APIView):
     def __get_object(self, id: int) -> Beneficiary:
         """Gets an object from the database or none
 
@@ -18,9 +19,11 @@ class BeneficiariesByIdView(APIView):
         Returns:
             Beneficiary: A record
         """
+        self.debug(f"Getting a beneficiary from database with id: {id}")
         try:
             return Beneficiary.objects.get(id=id)
         except Beneficiary.DoesNotExist:
+            self.warning(f"Beneficiary with id {id} not found.")
             return None
         
     @swagger_auto_schema(
@@ -41,6 +44,7 @@ class BeneficiariesByIdView(APIView):
         Returns:
             Response: The response
         """
+        self.debug(f"Getting beneficiary with id {id}.")
         beneficiary = self.__get_object(id)
         
         if not beneficiary:
@@ -71,6 +75,7 @@ class BeneficiariesByIdView(APIView):
         Returns:
             Response: The response
         """
+        self.debug(f"Updating beneficiary with id {id}.")
         beneficiary = self.__get_object(id)
         if not beneficiary:
             return Response({
@@ -104,6 +109,7 @@ class BeneficiariesByIdView(APIView):
         Returns:
             Response: The response
         """
+        self.debug(f"Deleting beneficiary with id {id}.")
         beneficiary = self.__get_object(id)
         
         if not beneficiary:
