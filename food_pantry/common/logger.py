@@ -1,8 +1,9 @@
+from abc import ABC
 import logging
 import inspect
 from food_pantry.settings import LOG_SETTINGS
 
-class Logger:  
+class Logger(ABC):  
     def init_log(self, log_name = None):
         if not log_name:
             log_name = self.__class__.__name__ 

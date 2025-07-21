@@ -24,7 +24,7 @@ class VolunteerByIdView(Logger, APIView):
             return Volunteer.objects.get(id=id)
         except Volunteer.DoesNotExist:
             # If the volunteer does not exist, return None
-            self.waring(f"Volunteer with id{id} not found in the database.")
+            self.warning(f"Volunteer with id{id} not found in the database.")
             return None
         except Exception as e:
             # If any other exception occurs, log it and return None
