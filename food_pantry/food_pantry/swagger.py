@@ -22,6 +22,10 @@ class CustomOpenAPISchemaGenerator(OpenAPISchemaGenerator):
                 "description": "List of all APIs available for donor operations."
             },
             {
+                "name": "Deliveries",
+                "description": "List of all APIs available for delivery operations."
+            },
+            {
                 "name": "Products",
                 "description": "List of all APIs available for product operations."
             },

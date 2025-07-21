@@ -5,7 +5,9 @@ from beneficiaries_api.models import Beneficiary
 class Delivery(models.Model):
     """Represents a delivery made to a beneficiary."""
     delivery_date = models.DateField()
-    beneficiary = models.ForeignKey(Beneficiary, on_delete=models.CASCADE)
+    address = models.CharField(max_length=255, blank=True, null=True)
+    beneficiary = models.ForeignKey(Beneficiary, on_delete=models.CASCADE, related_name='deliveries')
 
     def __str__(self):
-        return f"Delivery to {self.beneficiary.name} on {self.delivery_date}"
+        return f"Delivery {self.id} to {self.beneficiary.name} on {self.delivery_date}"
+
