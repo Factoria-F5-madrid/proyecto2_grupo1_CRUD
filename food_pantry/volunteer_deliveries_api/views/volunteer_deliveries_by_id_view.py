@@ -6,8 +6,9 @@ from drf_yasg.utils import swagger_auto_schema
 
 from volunteer_deliveries_api.models import VolunteerDelivery
 from volunteer_deliveries_api.serializer import VolunteerDeliveryRequestSerializer, VolunteerDeliveryResponseSerializer 
+from common.logger import Logger
 
-class VolunteerDeliveriesByIdView(APIView):
+class VolunteerDeliveriesByIdView(Logger, APIView):
     def __get_object(self, delivery_id: int) -> VolunteerDelivery:
         """Tries to get a volunteer delivery by its delivery id. Returns none if not found.
 
@@ -17,9 +18,11 @@ class VolunteerDeliveriesByIdView(APIView):
         Returns:
             VolunteerDelivery: A volunteer delivery or None
         """
+        self
         try:
             return VolunteerDelivery.objects.get(delivery_id=delivery_id)
         except VolunteerDelivery.DoesNotExist:
+            self.warning(f"Volunteer Delivery with id {delivery_id} not found.")
             return None
 
     @swagger_auto_schema(
@@ -41,6 +44,7 @@ class VolunteerDeliveriesByIdView(APIView):
             Response: JSON of volunteer delivery if found
         """
         
+        self.debug(f"Getting volunteer delivery with id {delivery_id}.")
         volunteer_delivery = self.__get_object(delivery_id)
         
         if not volunteer_delivery:
@@ -72,6 +76,7 @@ class VolunteerDeliveriesByIdView(APIView):
             Response: JSON of updated volunteer delivery if successful
         """
         
+        self.debug(f"Updating volunteer delivery with id {delivery_id}.")
         volunteer_delivery = self.__get_object(delivery_id)
         if not volunteer_delivery:
             return Response({
@@ -103,6 +108,7 @@ class VolunteerDeliveriesByIdView(APIView):
             Response: JSON of success message if deleted, or error if not found
         """
         
+        self.warning(f"Deleting volunteer delivery with id {delivery_id}.")
         volunteer_delivery = self.__get_object(delivery_id)
         if not volunteer_delivery:
             return Response({

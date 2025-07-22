@@ -19,8 +19,8 @@ class DeliveriesByIdView(Logger, APIView):
         Returns:
             Delivery: A delivery or None
         """
+        self.debug(f"Getting a delivery from database with id: {id}")
         try:
-            self.debug(f"Getting a delivery from the database with id {id}.")
             return Delivery.objects.get(id=id)
         except Delivery.DoesNotExist:
             self.warning(f"Delivery with id {id} not found in the database.")
@@ -119,7 +119,7 @@ class DeliveriesByIdView(Logger, APIView):
         Returns:
             Response: JSON with the result of the operation
         """
-        self.debug(f"Deleting delivery with id {id}.")
+        self.warning(f"Deleting delivery with id {id}.")
         delivery = self.__get_object(id)
         
         if not delivery:

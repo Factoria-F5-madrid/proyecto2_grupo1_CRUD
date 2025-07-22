@@ -6,8 +6,9 @@ from drf_yasg.utils import swagger_auto_schema
 
 from volunteer_deliveries_api.models import VolunteerDelivery
 from volunteer_deliveries_api.serializer import VolunteerDeliveryRequestSerializer, VolunteerDeliveryResponseSerializer
+from common.logger import Logger
 
-class VolunteerDeliveriesView(APIView):
+class VolunteerDeliveriesView(Logger, APIView):
     @swagger_auto_schema(
         tags=['Volunteer Deliveries'],
         operation_description="List all volunteer deliveries",
@@ -25,6 +26,7 @@ class VolunteerDeliveriesView(APIView):
         Returns:
             Response: JSON with all volunteer deliveries
         """
+        self.debug("Getting all volunteer deliveries.")
         volunteer_deliveries = VolunteerDelivery.objects.all()
         response = VolunteerDeliveryResponseSerializer(volunteer_deliveries, many=True)
         return Response(response.data, status=status.HTTP_200_OK)
@@ -47,10 +49,12 @@ class VolunteerDeliveriesView(APIView):
         Returns:
             Response: JSON with the response
         """
+        self.debug(f"Creating a new volunteer delivery: {request.data}.")
         data = VolunteerDeliveryRequestSerializer(data=request.data)
 
         if data.is_valid():
             data.save()
             return Response({"message": "Volunteer Delivery created successfully."}, status=status.HTTP_201_CREATED)
         
+        self.debug("Data validation failed.")
         return Response(data.errors, status=status.HTTP_400_BAD_REQUEST)
