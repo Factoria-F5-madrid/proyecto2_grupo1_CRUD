@@ -1,19 +1,8 @@
-import pytest
-from rest_framework.test import APIClient 
+import pytest 
 from donors_api.models import Donor
 
-# Some common variables
-name_updated = "My new name"
+name_updated = "New donor name"
 
-# Mock APIClient
-@pytest.fixture()  
-def api_client() -> APIClient:   # type: ignore
-    """  
-    Fixture to provide an API client  
-    """  
-    yield APIClient()
-    
-    
 # Mock Donor table with some records
 @pytest.fixture
 def donors() -> list[Donor]:
@@ -62,5 +51,3 @@ def donor_payload_update_name() -> dict:
     return {    
         "name": name_updated
     }
-    
-    

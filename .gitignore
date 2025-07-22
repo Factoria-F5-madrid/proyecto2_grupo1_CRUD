@@ -14,6 +14,7 @@ __pycache__/
 local_settings.py
 **/migrations/*
 !**/migrations/__init__.py
+**/.coverage
 
 # Archivos de sistema
 .DS_Store
