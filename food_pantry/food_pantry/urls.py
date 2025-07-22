@@ -46,6 +46,8 @@ urlpatterns = [
             path('donors/', include('donors_api.urls')),
             path('products/', include('products_api.urls')),
             path('volunteers/', include('volunteers_api.urls')),
+            path('delivery_products/', include('delivery_products_api.urls')),
+            
             path('doc/',schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
         ]
     ))

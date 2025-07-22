@@ -10,6 +10,3 @@ urlpatterns = [
     path(base_url, DeliveryProductsView.as_view(), name="delivery_products"),
     path(base_url + '<int:delivery_product_id>', DeliveryProductByIdView.as_view(), name="delivery_product"),
 ]
-
-
-    
