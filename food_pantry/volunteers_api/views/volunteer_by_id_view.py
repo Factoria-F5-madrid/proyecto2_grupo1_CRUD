@@ -6,9 +6,10 @@ from drf_yasg.utils import swagger_auto_schema
 
 from volunteers_api.models import Volunteer
 from volunteers_api.serializer import VolunteerResponseSerializer, VolunteerRequestSerializer
+from common.logger import Logger
 
 
-class VolunteerByIdView(APIView):
+class VolunteerByIdView(Logger, APIView):
     def __get_object(self, id: int) -> Volunteer:
         """Tries to get a volunteer by its id. Returns none if not found.
 
@@ -19,13 +20,15 @@ class VolunteerByIdView(APIView):
             Volunteer: A volunteer or None
         """
         try:
+            self.debug(f"Getting volunteer with id {id} from the database.")
             return Volunteer.objects.get(id=id)
         except Volunteer.DoesNotExist:
             # If the volunteer does not exist, return None
+            self.warning(f"Volunteer with id{id} not found in the database.")
             return None
         except Exception as e:
             # If any other exception occurs, log it and return None
-            print(f"An error occurred while retrieving the volunteer: {e}")
+            self.error(f"{e}.")
             return None
         
     @swagger_auto_schema(
@@ -46,7 +49,7 @@ class VolunteerByIdView(APIView):
         Returns:
             Response: JSON of volunteer if found
         """
-        
+        self.debug(f"Getting volunteer with id {id}.")
         volunteer = self.__get_object(id)
         
         if not volunteer:
@@ -77,7 +80,7 @@ class VolunteerByIdView(APIView):
         Returns:
             Response: JSON of volunteer updated
         """
-        
+        self.debug(f"Updating volunteer with id {id}")
         volunteer = self.__get_object(id)
         if not volunteer:
             return Response({
@@ -111,7 +114,7 @@ class VolunteerByIdView(APIView):
         Returns:
             Response: JSON with the result of the operation
         """
-        
+        self.debug(f"Deleting volunteer with id {id}")
         volunteer = self.__get_object(id)
         
         if not volunteer:

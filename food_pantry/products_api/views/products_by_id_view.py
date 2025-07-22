@@ -3,17 +3,18 @@ from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
-from django.db import IntegrityError
 
 from products_api.serializer import ProductRequestSerializer, ProductResponseSerializer
 from products_api.models import Product
+from common.logger import Logger
 
-class ProductsByIdView(APIView):
+class ProductsByIdView(Logger, APIView):
     def __get_object(self, id: int) -> Product:
+        self.debug(f"Getting product from database with if {id}.")
         try:
             return Product.objects.get(id=id)
         except Product.DoesNotExist:
+            self.warning(f"Product with id {id} not found in the database.")
             return None
         
     @swagger_auto_schema(
@@ -25,6 +26,7 @@ class ProductsByIdView(APIView):
         }
     )    
     def get(self, request: Request, id: int, *args, **kwargs) -> Response:
+        self.debug(f"Getting product with id {id}.")
         product = self.__get_object(id)
         
         if not product:
@@ -46,6 +48,7 @@ class ProductsByIdView(APIView):
         }
     )  
     def put(self, request: Request, id: int, *args, **kwargs) -> Response:
+        self.debug(f"Updating product with id {id}.")
         product = self.__get_object(id)
         if not product:
             return Response({
@@ -57,6 +60,7 @@ class ProductsByIdView(APIView):
         data = ProductRequestSerializer(instance = product, data=request.data, partial = True )
         if data.is_valid():
             data.save()
+        self.debug(f"Update not possible.")
         return Response(data.data, status=status.HTTP_200_OK)
             
 
@@ -70,6 +74,7 @@ class ProductsByIdView(APIView):
         }
     )    
     def delete(self, request: Request, id: int, *args, **kwargs) -> Response:
+        self.debug(f"Deleting product with id {id}.")
         product = self.__get_object(id)
         
         if not product:

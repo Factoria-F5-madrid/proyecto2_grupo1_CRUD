@@ -8,8 +8,6 @@ base_url = ""
 
 urlpatterns = [
     path(base_url, VolunteersView.as_view(), name="volunteers"),
-    path(base_url + '<int:volunteer_id>', VolunteerByIdView.as_view(), name="volunteer"),
+    path(base_url + '<int:id>', VolunteerByIdView.as_view(), name="volunteer"),
 ]
-
-
-    
+  

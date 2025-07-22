@@ -44,10 +44,11 @@ urlpatterns = [
         [
             path('beneficiaries/', include('beneficiaries_api.urls')),
             path('donors/', include('donors_api.urls')),
+            path('deliveries/', include('deliveries_api.urls')),
             path('products/', include('products_api.urls')),
             path('volunteers/', include('volunteers_api.urls')),
             path('delivery_products/', include('delivery_products_api.urls')),
-            
+            path('volunteer_deliveries/', include('volunteer_deliveries_api.urls')),
             path('doc/',schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
         ]
     ))

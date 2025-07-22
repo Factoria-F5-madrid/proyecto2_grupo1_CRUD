@@ -15,6 +15,12 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Logger settings
+LOG_SETTINGS={
+    "file_name": "food_pantry",
+    "file_log_level": "DEBUG",
+    "stdout_log_level": "ERROR"
+}
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
