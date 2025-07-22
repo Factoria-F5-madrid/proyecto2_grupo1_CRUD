@@ -8,8 +8,9 @@ from django.db import IntegrityError
 
 from products_api.serializer import ProductRequestSerializer, ProductResponseSerializer
 from products_api.models import Product
+from common.logger import Logger
 
-class ProductsView(APIView): 
+class ProductsView(Logger, APIView): 
     @swagger_auto_schema(
         tags=['Products'],
         operation_description="List all products, or products filtered by donor_id and category_id",
@@ -33,16 +34,21 @@ class ProductsView(APIView):
         }
     )    
     def get(self, request: Request, *args, **kwargs) -> Response:
+        self.debug(f"Getting all products.")
         donor_id = request.query_params.get('donor_id')
         category_id = request.query_params.get('category_id')
         
         if category_id and donor_id:
+            self.debug(f"Filtering by donor: {donor_id} and category: {category_id}.")
             products = Product.objects.filter(donor_id = donor_id, category_id=category_id).all().values()
         elif donor_id:
+            self.debug(f"Filtering by donor: {donor_id}.")
             products = Product.objects.filter(donor_id = donor_id).all().values()
         elif category_id:
+            self.debug(f"Filtering by category: {category_id}.")
             products = Product.objects.filter(category_id=category_id).all().values()
         else:
+            self.debug(f"No filtering. Selecting all products.")
             products = Product.objects.all().values()   
             
         response = ProductResponseSerializer(products, many = True)
@@ -55,16 +61,21 @@ class ProductsView(APIView):
         request_body=ProductRequestSerializer,
         responses={
             201: "Product created",
-            400: "Bad Request"
+            400: "Bad Request",
+            500: "Internal server error"
         }
     )
     def post(self, request: Request, *args, **kwargs) -> Response:
+        self.debug(f"Creating a product: {request.data}.")
         data = ProductRequestSerializer(data=request.data)
         
         if data.is_valid():
             try:
                 data.save()
             except IntegrityError:
-                return Response(data.error_messages, status=status.HTTP_400_BAD_REQUEST)
+                self.error(f"Error creating product: {data.errors}")
+                return Response(data.error_messages, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             return Response(data.data, status=status.HTTP_201_CREATED)
+        
+        self.warning(f"Could not create a product: {data.errors}")
         return Response(data.errors, status=status.HTTP_400_BAD_REQUEST)

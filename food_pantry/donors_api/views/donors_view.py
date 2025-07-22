@@ -6,9 +6,10 @@ from drf_yasg.utils import swagger_auto_schema
 
 from donors_api.models import Donor
 from donors_api.serializer import DonorResponseSerializer, DonorRequestSerializer
+from common.logger import Logger
 
 
-class DonorsView(APIView):
+class DonorsView(Logger, APIView):
     @swagger_auto_schema(
         tags=['Donors'],
         operation_description="List all donors",
@@ -26,6 +27,7 @@ class DonorsView(APIView):
         Returns:
             Response: JSON will all donors
         """
+        self.debug("Getting all donors")
         donors = Donor.objects.all().values()
         response = DonorResponseSerializer(donors, many = True)
         return Response(response.data, status=status.HTTP_200_OK)
@@ -48,9 +50,12 @@ class DonorsView(APIView):
         Returns:
             Response: JSON with the response
         """
+        self.debug(f"Creating a new donor: {request.data}")
         data = DonorRequestSerializer(data=request.data)
         
         if data.is_valid():
             data.save()
             return Response(data.data, status=status.HTTP_201_CREATED)
+        
+        self.debug(f"Data validation failed.")
         return Response(data.errors, status=status.HTTP_400_BAD_REQUEST)
