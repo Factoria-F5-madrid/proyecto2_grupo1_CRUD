@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from django.http import Http404
+from drf_yasg.utils import swagger_auto_schema
 
 from delivery_products_api.models import DeliveryProduct
 from delivery_products_api.serializer import (
@@ -18,7 +19,16 @@ class DeliveryProductByIdView(APIView):
     API View for retrieving, updating, and deleting a DeliveryProduct by ID.
     Does not crash on errors — returns meaningful messages and logs them.
     """
-
+    @swagger_auto_schema(
+        tags=['Delivery Products'],
+        operation_description="Retrieve, update, or delete a delivery product by ID",
+        responses={
+            200: DeliveryProductResponseSerializer,
+            404: "Not Found: Delivery product with the given ID does not exist.",
+            400: "Bad Request: Invalid data provided for update.",
+            500: "Internal Server Error: Unexpected error occurred."
+        }
+    )
     def get(self, request, id):
         """
         Retrieve a delivery product by its ID.
@@ -34,7 +44,17 @@ class DeliveryProductByIdView(APIView):
         except Exception as e:
             logger.error(f"Unexpected error in GET DeliveryProduct ID {id}: {e}")
             return Response({"error": "Server error retrieving product."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+    @swagger_auto_schema(
+        tags=['Delivery Products'],
+        operation_description="Update a delivery product by ID",
+        request_body=DeliveryProductRequestSerializer,
+        responses={
+            200: DeliveryProductResponseSerializer,
+            404: "Not Found: Delivery product with the given ID does not exist.",
+            400: "Bad Request: Invalid data provided for update.",
+            500: "Internal Server Error: Unexpected error occurred."
+        }
+    )
     def put(self, request, id):
         """
         Update a delivery product by its ID.
@@ -54,7 +74,15 @@ class DeliveryProductByIdView(APIView):
         except Exception as e:
             logger.error(f"Unexpected error in PUT DeliveryProduct ID {id}: {e}")
             return Response({"error": "Server error updating product."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+    @swagger_auto_schema(
+        tags=['Delivery Products'],
+        operation_description="Delete a delivery product by ID",
+        responses={
+            204: "No Content: Delivery product deleted successfully.",
+            404: "Not Found: Delivery product with the given ID does not exist.",
+            500: "Internal Server Error: Unexpected error occurred."
+        }
+    )
     def delete(self, request, id):
         """
         Delete a delivery product by its ID.

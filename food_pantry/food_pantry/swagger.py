@@ -30,7 +30,7 @@ class CustomOpenAPISchemaGenerator(OpenAPISchemaGenerator):
                 "description": "List of all APIs available for volunteer operations."
             },
             {
-                "name": "Delivery_Products",
+                "name": "Delivery Products",
                 "description": "List of all APIs available for delivery product operations."
             }
             
