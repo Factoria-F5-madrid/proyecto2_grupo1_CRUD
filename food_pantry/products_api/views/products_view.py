@@ -61,7 +61,8 @@ class ProductsView(Logger, APIView):
         request_body=ProductRequestSerializer,
         responses={
             201: "Product created",
-            400: "Bad Request"
+            400: "Bad Request",
+            500: "Internal server error"
         }
     )
     def post(self, request: Request, *args, **kwargs) -> Response:
@@ -72,6 +73,9 @@ class ProductsView(Logger, APIView):
             try:
                 data.save()
             except IntegrityError:
-                return Response(data.error_messages, status=status.HTTP_400_BAD_REQUEST)
+                self.error(f"Error creating product: {data.errors}")
+                return Response(data.error_messages, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             return Response(data.data, status=status.HTTP_201_CREATED)
+        
+        self.warning(f"Could not create a product: {data.errors}")
         return Response(data.errors, status=status.HTTP_400_BAD_REQUEST)

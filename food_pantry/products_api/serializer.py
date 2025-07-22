@@ -5,7 +5,7 @@ from .models import Product
 class ProductRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['name', 'quantity', 'expiration_date', 'donor_id', 'category_id']
+        fields = ['name', 'quantity', 'expiration_date', 'donor', 'category']
         
 
 class ProductResponseSerializer(serializers.ModelSerializer):

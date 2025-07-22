@@ -9,7 +9,7 @@ class Product(models.Model):
     name = models.CharField(max_length=180)
     quantity = models.PositiveIntegerField()
     expiration_date = models.DateField(null=True, blank=True)
-    donor = models.ForeignKey(Donor, on_delete=models.CASCADE, related_name='donors')
+    donor = models.ForeignKey(Donor, on_delete=models.CASCADE, related_name='donor')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='category')
 
     def __str__(self):
