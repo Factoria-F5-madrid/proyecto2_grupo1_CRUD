@@ -2,12 +2,12 @@
 from django.urls import path
 
 from .views.volunteer_deliveries_view import VolunteerDeliveriesView
-from .views.volunteer_delivery_by_id_view import VolunteerDeliveryByIdView
+from .views.volunteer_deliveries_by_id_view import VolunteerDeliveriesByIdView
 
 base_url = ""
 
 urlpatterns = [
     path(base_url, VolunteerDeliveriesView.as_view(), name="volunteer_deliveries"),
-    path(base_url + '<int:delivery_id>', VolunteerDeliveryByIdView.as_view(), name="volunteer_delivery"),
+    path(base_url + '<int:delivery_id>', VolunteerDeliveriesByIdView.as_view(), name="volunteer_delivery"),
 ]
 

@@ -32,6 +32,11 @@ class CustomOpenAPISchemaGenerator(OpenAPISchemaGenerator):
             {
                 "name": "Volunteers",
                 "description": "List of all APIs available for volunteer operations."
+            },
+            {
+                "name": "Volunteer Deliveries",
+                "description": "List of all APIs available for volunteer delivery operations."
             }
+            
         ]
         return swagger
