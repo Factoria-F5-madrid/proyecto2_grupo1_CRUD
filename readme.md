@@ -49,17 +49,72 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+---
+
 ## Estructura del proyecto
 
 ```
 food_pantry/
-├── food_pantry/         Configuración principal de Django
-├── food_pantry_app/     Lógica del sistema
-├── manage.py            Archivo de control del proyecto
-├── venv/                 Entorno virtual (no incluido en el repositorio)
-├── requirements.txt     Lista de dependencias
-└── README.md
+├── food_pantry/               Configuración principal de Django
+├── beneficiaries_api/         Lógica BENEFICIARIO
+├── categories_api/            Lógica CATEGORIA
+├── deliveries_api/            Lógica DELIVERY
+├── delivery_products_api/     Lógica DELIVERYPRODUCT
+├── donors_api/                Lógica DONANTE
+├── volunteer_deliveries_api/  Lógica VOLUNTEERDELIVERY
+├── volunteers_app/            Lógica VOLUNTEER
+├── food_pantry_app/           Lógica del sistema
+├── manage.py                  Archivo de control del proyecto
+├── venv/                      Entorno virtual (no incluido en el repositorio)
+├── requirements.txt           Lista de dependencias
+├── README.md
+├── docs/Database_Model_Documentation_v1.0.pdf  Data Base schema description
+└── images/ER_Food_Pantry_DB_schema_v1.0.png    ER Diagram DB schema            
 ```
+
+---
+
+## Esquema de Base de Datos
+
+El modelo de base de datos de la aplicación **Food Pantry** ha sido diseñado para cubrir funcionalidades clave como entregas a beneficiarios, control de inventario de productos, coordinación de voluntarios y seguimiento de donantes.
+
+### Tablas o entidades
+
+- `Beneficiary`
+- `Volunteer`
+- `VolunteerDelivery`
+- `Product`
+- `Delivery`
+- `DeliveryProduct`
+- `Donor`
+- `Category`
+
+### Resumen
+
+- Los **beneficiarios** (Tabla **Beneficiary**) reciben entregas registradas en la tabla `Delivery`.
+- Los **voluntarios** (Tabla **Volunteer**) se vinculan a las entregas mediante la tabla `VolunteerDelivery`.
+- Los **productos** (Tabla **BProducts**) se categorizan y gestionan teniendo en cuenta su expiración y el control de stock.
+- Cada entrega (Tabla **Delivery**) puede incluir múltiples productos, administrados a través de la tabla `DeliveryProduct`.
+- Todas las relaciones utilizan **claves foráneas** para asegurar la integridad referencial.
+
+### Diagrama Entidad-Relación (ER)
+
+Puedes consultar el esquema visual de la base de datos en el siguiente diagrama:
+
+📎 [`images/ER_Food_Pantry_DB_schema_v1.0.png`](images/ER_Food_Pantry_DB_schema_v1.0.png)
+
+### Documentación Detallada
+
+Una descripción completa de las entidades, atributos, relaciones y restricciones está disponible en la siguiente documentación:
+
+ [`docs/Food_Pantry_DB_Schema_Summary_v1.0_EN.pdf`](docs/Food_Pantry_DB_Schema_Summary_v1.0_EN.pdf)
+
+
+
+ *Última actualización: Julio 2025 — Mantenido por el equipo de desarrollo de OCAWEB*
+
+---
+
 ## Pruebas
 ```
 python manage.py test
@@ -67,10 +122,10 @@ python manage.py test
 
 ## Equipo de desarollo
 
-  - nombre1 - Coordinador general
-  - nombre2 - Back
-  - nombre3 - Front
-  - nombre4 - BD y Documentacion
+  - Óscar Rodríguez - Coordinador general
+  - Ciprian Nica - Back
+  - Aroa Mateo - Front
+  - Alfonso Bermúdez - BD y Documentación
 
 ## Estado del proyecto
 Este sistema se encuentra actualmente en desarrollo como parte de una entrega académica
