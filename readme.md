@@ -101,13 +101,13 @@ El modelo de base de datos de la aplicación **Food Pantry** ha sido diseñado p
 
 Puedes consultar el esquema visual de la base de datos en el siguiente diagrama:
 
-📎 [`images/ER_Food_Pantry_DB_schema_v1.0.png`](images/ER_Food_Pantry_DB_schema_v1.0.png)
+  ![ER Diagram](images/ER_Food_Pantry_DB_schema_v1.0.png)
 
 ### Documentación Detallada
 
 Una descripción completa de las entidades, atributos, relaciones y restricciones está disponible en la siguiente documentación:
 
- [`docs/Food_Pantry_DB_Schema_Summary_v1.0_EN.pdf`](docs/Food_Pantry_DB_Schema_Summary_v1.0_EN.pdf)
+  [`docs/Food_Pantry_DB_Schema_Summary_v1.0_EN.pdf`](docs/Food_Pantry_DB_Schema_Summary_v1.0_EN.pdf)
 
 
 
