@@ -6,12 +6,9 @@ from delivery_products_api.models import DeliveryProduct
 from datetime import datetime
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-import logging
+from common.logger import Logger
 
-# Configure logging
-logger = logging.getLogger(__name__)
-
-class DeliveryProductsView(APIView):
+class DeliveryProductsView(Logger, APIView):
     """
     API view to list DeliveryProduct instances filtered by delivery date (GET)
     and to create new DeliveryProduct instances (POST).
@@ -51,30 +48,30 @@ class DeliveryProductsView(APIView):
         """
         date_str = request.query_params.get('date')
         confirm = request.query_params.get('confirm', 'false').lower() == 'true'
-        logger.info(f"GET request received with date='{date_str}' and confirm={confirm}")
+        self.info(f"GET request received with date='{date_str}' and confirm={confirm}")
 
         if date_str:
             try:
                 delivery_date = datetime.strptime(date_str, '%Y-%m-%d').date()
                 delivery_products = DeliveryProduct.objects.filter(delivery__delivery_date=delivery_date)
-                logger.info(f"Filtered delivery products by date: {delivery_date}, count={delivery_products.count()}")
+                self.info(f"Filtered delivery products by date: {delivery_date}, count={delivery_products.count()}")
             except ValueError:
-                logger.error(f"Invalid date format received: {date_str}")
+                self.error(f"Invalid date format received: {date_str}")
                 return Response(
                     {"error": "Invalid date format. Use 'YYYY-MM-DD'."},
                     status=status.HTTP_400_BAD_REQUEST
                 )
         elif confirm:
             delivery_products = DeliveryProduct.objects.all()
-            logger.info("No date provided, retrieving all delivery products as confirm is true.")
+            self.info("No date provided, retrieving all delivery products as confirm is true.")
         else:
-            logger.warning("No date provided and confirm not set to true. Returning warning.")
+            self.warning("No date provided and confirm not set to true. Returning warning.")
             return Response(
                 {"warning": "No date provided. Use 'confirm=true' to retrieve all records."},
                 status=status.HTTP_400_BAD_REQUEST
             )
         serializer = DeliveryProductResponseSerializer(delivery_products, many=True)
-        logger.info(f"Returning {len(serializer.data)} delivery products.")
+        self.info(f"Returning {len(serializer.data)} delivery products.")
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     @swagger_auto_schema(
@@ -99,20 +96,20 @@ class DeliveryProductsView(APIView):
             Response: Serialized created object or validation errors.
         """
         try:
-            logger.info(f"Creating a new delivery product with data: {request.data}")
+            self.info(f"Creating a new delivery product with data: {request.data}")
             serializer = DeliveryProductRequestSerializer(data=request.data)
             if serializer.is_valid():
                 delivery_product = serializer.save()
-                logger.info(f"Delivery product created successfully: ID {delivery_product.id}")
+                self.info(f"Delivery product created successfully: ID {delivery_product.id}")
                 response_serializer = DeliveryProductResponseSerializer(delivery_product)
                 return Response(response_serializer.data, status=status.HTTP_201_CREATED)
             
-            logger.warning(f"POST /delivery_products - Validation failed: {serializer.errors}")
+            self.warning(f"POST /delivery_products - Validation failed: {serializer.errors}")
             
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
         except Exception as e:
-            logger.error("POST /delivery_products - Unexpected error occurred.", exc_info=True)
+            self.error("POST /delivery_products - Unexpected error occurred.", exc_info=True)
             return Response(
                 {"error": "Failed to create delivery product.", "details": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR

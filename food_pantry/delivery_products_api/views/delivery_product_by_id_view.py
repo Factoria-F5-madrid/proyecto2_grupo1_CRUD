@@ -1,4 +1,3 @@
-import logging
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -11,10 +10,9 @@ from delivery_products_api.serializer import (
     DeliveryProductRequestSerializer,
     DeliveryProductResponseSerializer
 )
+from common.logger import Logger
 
-logger = logging.getLogger(__name__)
-
-class DeliveryProductByIdView(APIView):
+class DeliveryProductByIdView(Logger, APIView):
     """
     API View for retrieving, updating, and deleting a DeliveryProduct by ID.
     Does not crash on errors — returns meaningful messages and logs them.
@@ -36,13 +34,13 @@ class DeliveryProductByIdView(APIView):
         try:
             delivery_product = get_object_or_404(DeliveryProduct, id=id)
             serializer = DeliveryProductResponseSerializer(delivery_product)
-            logger.info(f"Retrieved DeliveryProduct with ID {id}")
+            self.info(f"Retrieved DeliveryProduct with ID {id}")
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Http404:
-            logger.warning(f"DeliveryProduct with ID {id} not found")
+            self.warning(f"DeliveryProduct with ID {id} not found")
             return Response({"error": "Delivery product not found."}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
-            logger.error(f"Unexpected error in GET DeliveryProduct ID {id}: {e}")
+            self.error(f"Unexpected error in GET DeliveryProduct ID {id}: {e}")
             return Response({"error": "Server error retrieving product."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     @swagger_auto_schema(
         tags=['Delivery Products'],
@@ -64,15 +62,15 @@ class DeliveryProductByIdView(APIView):
             serializer = DeliveryProductRequestSerializer(delivery_product, data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                logger.info(f"Updated DeliveryProduct with ID {id}")
+                self.info(f"Updated DeliveryProduct with ID {id}")
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            logger.warning(f"Validation failed for PUT DeliveryProduct ID {id}: {serializer.errors}")
+            self.warning(f"Validation failed for PUT DeliveryProduct ID {id}: {serializer.errors}")
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Http404:
-            logger.warning(f"Cannot update — DeliveryProduct with ID {id} not found")
+            self.warning(f"Cannot update — DeliveryProduct with ID {id} not found")
             return Response({"error": "Delivery product not found."}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
-            logger.error(f"Unexpected error in PUT DeliveryProduct ID {id}: {e}")
+            self.error(f"Unexpected error in PUT DeliveryProduct ID {id}: {e}")
             return Response({"error": "Server error updating product."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     @swagger_auto_schema(
         tags=['Delivery Products'],
@@ -90,11 +88,11 @@ class DeliveryProductByIdView(APIView):
         try:
             delivery_product = get_object_or_404(DeliveryProduct, id=id)
             delivery_product.delete()
-            logger.info(f"Deleted DeliveryProduct with ID {id}")
+            self.info(f"Deleted DeliveryProduct with ID {id}")
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Http404:
-            logger.warning(f"Cannot delete — DeliveryProduct with ID {id} not found")
+            self.warning(f"Cannot delete — DeliveryProduct with ID {id} not found")
             return Response({"error": "Delivery product not found."}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
-            logger.error(f"Unexpected error in DELETE DeliveryProduct ID {id}: {e}")
+            self.error(f"Unexpected error in DELETE DeliveryProduct ID {id}: {e}")
             return Response({"error": "Server error deleting product."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
