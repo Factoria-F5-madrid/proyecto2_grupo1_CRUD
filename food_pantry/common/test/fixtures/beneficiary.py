@@ -25,7 +25,7 @@ def beneficiaries() -> list[Beneficiary]:
 
 # Create beneficiary
 @pytest.fixture
-def beneficiary_post_payload() -> dict:
+def delivery_products_post_payload() -> dict:
     return {
         "name": "Beneficiary name",
         "Address": "Beneficiary address",
