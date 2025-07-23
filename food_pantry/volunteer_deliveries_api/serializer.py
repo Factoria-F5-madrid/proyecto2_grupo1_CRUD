@@ -18,7 +18,4 @@ class VolunteerDeliveryResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = VolunteerDelivery
         fields = ['id', 'volunteer', 'volunteer_name', 'delivery', 'delivery_id']   
-
-
-
-        
+  
