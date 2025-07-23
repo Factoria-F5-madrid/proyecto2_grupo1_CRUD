@@ -85,21 +85,14 @@ class DeliveriesByIdView(Logger, APIView):
                             status=status.HTTP_400_BAD_REQUEST
                             )
             
-        data = DeliveryRequestSerializer(instance = delivery, data=request.data, partial = True )
-        if data.is_valid():
-            # updated_delivery = data.save(commit=False)
-            data.save()
-
-            # If address is missing or empty, set it to the beneficiary's address
-            # if not updated_delivery.address:
-            #     updated_delivery.address = updated_delivery.beneficiary.address
-
-            # updated_delivery.save()
-
-            response_data = DeliveryResponseSerializer(data)
+        serializer = DeliveryRequestSerializer(instance = delivery, data=request.data, partial = True )
+        
+        if serializer.is_valid():
+            updated_delivery = serializer.save()
+            response_data = DeliveryResponseSerializer(updated_delivery)
             return Response(response_data.data, status=status.HTTP_200_OK)
 
-        return Response(data.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
         
     @swagger_auto_schema(
