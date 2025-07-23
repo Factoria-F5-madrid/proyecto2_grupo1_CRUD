@@ -1,10 +1,10 @@
 import pytest
 from rest_framework import status
-from .fixtures import (
-    api_client, donors, donor_post_payload, donor_payload_missing_name, 
+from common.test.fixtures.api import api_client
+from common.test.fixtures.donor import (
+    donors, donor_post_payload, donor_payload_missing_name, 
     donor_payload_update_name
 )
-
 
 class TestDonors:
     end_point = "/food_pantry/api/v1/donors/"

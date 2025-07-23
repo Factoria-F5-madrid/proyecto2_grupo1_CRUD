@@ -9,7 +9,7 @@ base_url = ""
 
 urlpatterns = [
     path(base_url, DeliveriesView.as_view(), name="deliveries"),
-    path(base_url + '<int:delivery_id>', DeliveriesByIdView.as_view(), name="delivery"),
+    path(base_url + '<int:id>', DeliveriesByIdView.as_view(), name="delivery"),
 ]
 
 

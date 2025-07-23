@@ -28,3 +28,4 @@ local_settings.py
 
 #Test
 .pytest_cache/
+**/.coverage

@@ -87,15 +87,16 @@ class DeliveriesByIdView(Logger, APIView):
             
         data = DeliveryRequestSerializer(instance = delivery, data=request.data, partial = True )
         if data.is_valid():
-            updated_delivery = data.save(commit=False)
+            # updated_delivery = data.save(commit=False)
+            data.save()
 
             # If address is missing or empty, set it to the beneficiary's address
-            if not updated_delivery.address:
-                updated_delivery.address = updated_delivery.beneficiary.address
+            # if not updated_delivery.address:
+            #     updated_delivery.address = updated_delivery.beneficiary.address
 
-            updated_delivery.save()
+            # updated_delivery.save()
 
-            response_data = DeliveryResponseSerializer(updated_delivery)
+            response_data = DeliveryResponseSerializer(data)
             return Response(response_data.data, status=status.HTTP_200_OK)
 
         return Response(data.errors, status=status.HTTP_400_BAD_REQUEST)
