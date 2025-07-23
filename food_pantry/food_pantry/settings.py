@@ -37,7 +37,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'food_pantry_app',              # Your food pantry app
     'donors_api',                   # All API related operations for the Donor table
     'categories_api',               # All API related operations for the Category table
     'products_api',                 # All API related operations for the Product table
