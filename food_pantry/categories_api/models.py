@@ -1,17 +1,5 @@
 from django.db import models
 
-class Donors(models.Model):
-    """
-    Modelo para representar un donante en el banco de alimentos.
-    """
-    name = models.CharField(max_length=180)
-    type= models.CharField(max_length=180)
-    contact = models.CharField(max_length=180)
-    anonymous = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.name
-
 class Category(models.Model):
     """
     Modelo para representar una categoría de alimentos o artículos.
