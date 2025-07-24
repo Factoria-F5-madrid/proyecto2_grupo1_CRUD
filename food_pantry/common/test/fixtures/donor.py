@@ -10,14 +10,14 @@ def donors() -> list[Donor]:
         Donor.objects.create(
             id=1,
             name='Name 1',
-            type='Type 1',
+            type='individual',
             contact='Contact 1',
             anonymous=False
         ),
         Donor.objects.create(
             id=2,
             name='Name 2',
-            type='Type 2',
+            type='institución',
             contact='Contact 2',
             anonymous=False
         )
@@ -31,18 +31,18 @@ def donors() -> list[Donor]:
 def donor_post_payload() -> dict:
     return {
         "name": "Donor name",
-        "type": "Donor type",
+        "type": Donor.DONOR_TYPES[0][0], # "individual"
         "contact": "Donor contact",
-        "anonymous": "True"
+        "anonymous": True
     }
 
 # Create donor wiht missing data
 @pytest.fixture
 def donor_payload_missing_name() -> dict:
     return {    
-        "type": "Donor type",
+        "type": Donor.DONOR_TYPES[1][1], # "institución"
         "contact": "Donor contact",
-        "anonymous": "True"
+        "anonymous": True
     }
     
 # Update donor
