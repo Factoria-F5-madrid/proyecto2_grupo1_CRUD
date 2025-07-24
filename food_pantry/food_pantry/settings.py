@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv # Load environment variables from .env file
 
 # Load environment variables from .env file
 load_dotenv()
@@ -24,7 +24,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 LOG_SETTINGS={
     "file_name": os.getenv("LOG_FILE_NAME", "food_pantry"),
     "file_log_level": os.getenv("LOG_FILE_LEVEL", "DEBUG"),
-    "stdout_log_level": os.getenv("LOG_STDOUT_LEVEL", "ERROR")
+    "stdout_log_level": os.getenv("LOG_STDOUT_LEVEL", "ERROR"),
+    'log_dir': os.path.join(BASE_DIR, 'logs'),
+    'log_files': {
+        'default': f"{os.getenv('LOG_FILE_NAME', 'food_pantry')}.log",
+        'general': f"{os.getenv('LOG_FILE_NAME', 'food_pantry')}.log",
+        'scripts': 'scripts.log',
+        'tests': f"{os.getenv('LOG_FILE_NAME', 'food_pantry')}.log",  # Logs de tests → food_pantry.log
+        'populate_db': 'populate_db.log',
+        'clean_db': 'clean_db.log',
+    }
 }
 
 # Quick-start development settings - unsuitable for production
@@ -58,6 +67,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_yasg',  # For Swagger documentation
+    'fixtures',  # Custom app for fixtures management for cleaning and populating the database
 ]
 
 SWAGGER_SETTINGS = {
