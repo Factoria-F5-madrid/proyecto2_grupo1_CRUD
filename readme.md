@@ -68,7 +68,8 @@ food_pantry/
 ├── venv/                      Entorno virtual (no incluido en el repositorio)
 ├── requirements.txt           Lista de dependencias
 ├── common
-|     ├── test/                Lógica implementación de logs del sistema (logger)
+|     ├── test/                Mocks para el unit testing
+|     ├── logger-py            Lógica implementación de logs del sistema
 |            
 ├── fixtures
 |     ├── management
