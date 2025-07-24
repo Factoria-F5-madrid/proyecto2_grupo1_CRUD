@@ -164,7 +164,7 @@ class Logger(ABC):
     
     def debug(self,message):
         self.__logger_app.debug(f"{inspect.stack()[1][3]} - {message}")
-        
+
     def critical(self,message):
         self.__logger_app.critical(f"{inspect.stack()[1][3]} - {message}")
         
