@@ -67,6 +67,14 @@ food_pantry/
 ├── manage.py                  Archivo de control del proyecto
 ├── venv/                      Entorno virtual (no incluido en el repositorio)
 ├── requirements.txt           Lista de dependencias
+├── common
+|     ├── test/                Lógica implementación de logs del sistema (logger)
+|            
+├── fixtures
+|     ├── management
+|           ├── commands       Scripts rebuild base de datos (clean, populate, rebuild)
+|
+├── logs                       Centralización de logs
 ├── README.md
 ├── docs/Database_Model_Documentation_v1.0.pdf  Data Base schema description
 └── images/ER_Food_Pantry_DB_schema_v1.0.png    ER Diagram DB schema            
@@ -115,10 +123,55 @@ Una descripción completa de las entidades, atributos, relaciones y restriccione
 
 ---
 
-## Pruebas
+## Ejecución scripts reconstrucción base de datos
+
+La aplicación incluye scripts de vaciado y carga de la base de datos, disponibles como comandos de Django:
+
+### Limpieza o vaciado de base de datos (mantiene estructura)
+
+Elimina todos los registros de la base de datos (útil para empezar desde cero):
+
 ```
-python manage.py test
+python manage.py clean_db
 ```
+
+### Carga de datos ficticios de prueba con Faker
+
+Genera registros de prueba usando datos aleatorios realistas (útil para desarrollo y testeo):
+
+```
+python manage.py faker_populate_db
+```
+
+### Reconstruir base de datos
+
+Ejecuta primero clean_db y luego faker_populate_db automáticamente:
+
+```
+python manage.py rebuild_db
+```
+Todos los scripts generan logs detallados en la carpeta logs/, por ejemplo:
+
+ - logs/clean_db.log
+ - logs/populate_db.log
+ - logs/scripts.log (si se usa el logger por nombre genérico)
+ - logs/tests.log (cuando se ejecutan los tests)
+
+---
+
+## Pruebas con pytest
+
+Para ejecutar todos los tests de la aplicación y ver el resumen detallado, se han definido pruebas automatizadas con pytest y pytest-django.:
+
+```
+pytest -v
+```
+
+Esto ejecutará los tests definidos en la carpeta food_pantry/common/test/ para cada módulo (donors_api, beneficiaries_api, etc.) y generará registros en el fichero logs/tests.log.
+
+Asegúrate de que las variables de entorno y el entorno virtual estén correctamente activados (venv) antes de lanzar las pruebas.
+
+---
 
 ## Equipo de desarollo
 

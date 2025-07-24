@@ -9,8 +9,13 @@ class Donor(models.Model):
     class Meta:
         verbose_name_plural = 'Donors'
     
+    DONOR_TYPES = [
+        ("individual", "Individual"),
+        ("institución", "Institución")
+    ]
+
     name = models.CharField(max_length=180)
-    type= models.CharField(max_length=180)
+    type= models.CharField(max_length=20, choices=DONOR_TYPES)
     contact = models.CharField(max_length=180)
     anonymous = models.BooleanField(default=False)
     
