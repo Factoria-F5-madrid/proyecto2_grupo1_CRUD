@@ -4,6 +4,8 @@ from products_api.models import Product
 
 # Create your models here.
 class DeliveryProduct(models.Model):
+    class Meta:
+        verbose_name_plural = 'Delivery products'
     
     """Represents a specific quantity of a product delivered in a delivery."""
     

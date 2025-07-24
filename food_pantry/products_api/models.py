@@ -5,6 +5,9 @@ from categories_api.models import Category
 
 # Create your models here.
 class Product(models.Model):
+    class Meta:
+        verbose_name_plural = 'Products'
+        
     """Represents a donated product with donor and category information."""
     name = models.CharField(max_length=180)
     quantity = models.PositiveIntegerField()

@@ -18,8 +18,6 @@ from common.logger import Logger
 # abstract class for logging
 class Command(BaseCommand):
     help = "Clean the database by deleting all records from specified tables."
-
-      
     
     def handle(self, *args, **options):
             

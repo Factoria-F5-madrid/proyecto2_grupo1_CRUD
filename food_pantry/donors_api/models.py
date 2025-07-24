@@ -6,6 +6,8 @@ class Donor(models.Model):
     Args:
         models (_type_): _description_
     """
+    class Meta:
+        verbose_name_plural = 'Donors'
     
     DONOR_TYPES = [
         ("individual", "Individual"),
