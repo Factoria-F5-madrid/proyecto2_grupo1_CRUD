@@ -6,6 +6,8 @@ class Donor(models.Model):
     Args:
         models (_type_): _description_
     """
+    class Meta:
+        verbose_name_plural = 'Donors'
     
     name = models.CharField(max_length=180)
     type= models.CharField(max_length=180)
