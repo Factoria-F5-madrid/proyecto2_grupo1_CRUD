@@ -85,22 +85,22 @@ class Logger(ABC):
 
     def __init__(self, log_name=None):
         # Initialize logger with optional custom name
-        self._logger_app = self.init_log(log_name)
+        self.__logger_app = self.init_log(log_name)
     
     def info(self,message):
-        self._logger_app.info(f"{inspect.stack()[1][3]} - {message}")
+        self.__logger_app.info(f"{inspect.stack()[1][3]} - {message}")
         
     def warning(self,message):
-        self._logger_app.warning(f"{inspect.stack()[1][3]} - {message}")
+        self.__logger_app.warning(f"{inspect.stack()[1][3]} - {message}")
     
     def debug(self,message):
-        self._logger_app.debug(f"{inspect.stack()[1][3]} - {message}")
+        self.__logger_app.debug(f"{inspect.stack()[1][3]} - {message}")
         
     def critical(self,message):
-        self._logger_app.critical(f"{inspect.stack()[1][3]} - {message}")
+        self.__logger_app.critical(f"{inspect.stack()[1][3]} - {message}")
         
     def error(self,message):
-        self._logger_app.error(f"{inspect.stack()[1][3]} - {message}")
+        self.__logger_app.error(f"{inspect.stack()[1][3]} - {message}")
         
 ## El uso del atribto privado __logger_app, hace que en Python no es accesible desde clases hijas 
 ## como en la clase Command, por la técnica de name mangling.
