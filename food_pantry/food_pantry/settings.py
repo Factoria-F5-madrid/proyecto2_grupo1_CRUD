@@ -11,26 +11,28 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Logger settings
 LOG_SETTINGS={
-    #"file_name": "food_pantry",
-    "file_log_level": "DEBUG",
-    "stdout_log_level": "ERROR",
+    "file_name": os.getenv("LOG_FILE_NAME", "food_pantry"),
+    "file_log_level": os.getenv("LOG_FILE_LEVEL", "DEBUG"),
+    "stdout_log_level": os.getenv("LOG_STDOUT_LEVEL", "ERROR"),
     'log_dir': os.path.join(BASE_DIR, 'logs'),
     'log_files': {
-        'default': 'food_pantry.log',
-        'general': 'food_pantry.log',
+        'default': f"{os.getenv('LOG_FILE_NAME', 'food_pantry')}.log",
+        'general': f"{os.getenv('LOG_FILE_NAME', 'food_pantry')}.log",
         'scripts': 'scripts.log',
-        'tests': 'tests.log',
-        'populate_db': 'populate_db.log', # For Faker populate_db script
-        'clean_db': 'clean_db.log', # For clean_db script
-
+        'tests': f"{os.getenv('LOG_FILE_NAME', 'food_pantry')}.log",  # Logs de tests → food_pantry.log
+        'populate_db': 'populate_db.log',
+        'clean_db': 'clean_db.log',
     }
 }
 

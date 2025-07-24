@@ -3,7 +3,7 @@ from rest_framework import status
 from common.test.fixtures.api import api_client
 from common.test.fixtures.beneficiary import (
     beneficiaries, 
-    beneficiary_post_payload, 
+    delivery_products_post_payload, 
     beneficiary_payload_missing_name, 
     beneficiary_payload_update_name
 )
@@ -22,12 +22,12 @@ class TestBeneficiaries:
     
     # Create a beneficiary    
     @pytest.mark.django_db
-    def test_push_beneficiary_returns_created(self, api_client, beneficiary_post_payload):
-        response = api_client.post(self.end_point, beneficiary_post_payload)
+    def test_push_beneficiary_returns_created(self, api_client, delivery_products_post_payload):
+        response = api_client.post(self.end_point, delivery_products_post_payload)
         
-        assert response.data.get('name') == beneficiary_post_payload.get('name')
-        assert response.data.get('address') == beneficiary_post_payload.get('address')
-        assert response.data.get('contact_info') == beneficiary_post_payload.get('contact_info')
+        assert response.data.get('name') == delivery_products_post_payload.get('name')
+        assert response.data.get('address') == delivery_products_post_payload.get('address')
+        assert response.data.get('contact_info') == delivery_products_post_payload.get('contact_info')
         assert response.status_code == status.HTTP_201_CREATED
     
     # Create benficiary with bad data    

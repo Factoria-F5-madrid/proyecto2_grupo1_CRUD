@@ -11,7 +11,7 @@ from common.test.fixtures.product import (
 )
 
 
-class TestBeneficiaries:
+class TestProducts:
     end_point = "/food_pantry/api/v1/products/"
     
     # Get all products
