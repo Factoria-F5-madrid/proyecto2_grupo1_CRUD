@@ -64,18 +64,20 @@ food_pantry/
 ├── volunteer_deliveries_api/  Lógica VOLUNTEERDELIVERY
 ├── volunteers_app/            Lógica VOLUNTEER
 ├── food_pantry_app/           Lógica del sistema
+├── food_pantry_web/           Aplicación web
 ├── manage.py                  Archivo de control del proyecto
 ├── venv/                      Entorno virtual (no incluido en el repositorio)
 ├── requirements.txt           Lista de dependencias
+├── .env                       Variables de entorno
 ├── common
-|     ├── test/                Mocks para el unit testing
-|     ├── logger-py            Lógica implementación de logs del sistema
+|     ├── test/                
+|           ├── logger.py      Lógica implementación de logs del sistema (logger)
 |            
 ├── fixtures
 |     ├── management
-|           ├── commands       Scripts rebuild base de datos (clean, populate, rebuild)
+|           ├── commands/       Scripts rebuild base de datos (clean, populate, rebuild)
 |
-├── logs                       Centralización de logs
+├── logs/                       Centralización de logs
 ├── README.md
 ├── docs/Database_Model_Documentation_v1.0.pdf  Data Base schema description
 └── images/ER_Food_Pantry_DB_schema_v1.0.png    ER Diagram DB schema            
@@ -155,8 +157,8 @@ Todos los scripts generan logs detallados en la carpeta logs/, por ejemplo:
 
  - logs/clean_db.log
  - logs/populate_db.log
- - logs/scripts.log (si se usa el logger por nombre genérico)
- - logs/tests.log (cuando se ejecutan los tests)
+ - logs/food_pantry.log 
+ 
 
 ---
 
@@ -171,6 +173,11 @@ pytest -v
 Esto ejecutará los tests definidos en la carpeta food_pantry/common/test/ para cada módulo (donors_api, beneficiaries_api, etc.) y generará registros en el fichero logs/tests.log.
 
 Asegúrate de que las variables de entorno y el entorno virtual estén correctamente activados (venv) antes de lanzar las pruebas.
+
+Para una idea clara de cuánto del código está cubierto por las pruebas automatizadas usamos **coverage**:
+```
+pytest --cov
+```
 
 ---
 
