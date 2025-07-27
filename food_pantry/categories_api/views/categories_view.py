@@ -8,7 +8,7 @@ from drf_yasg import openapi # Importa openapi para definir parámetros manuales
 # Asegúrate de que las importaciones del modelo y serializador sean correctas
 # Basado en lo que definimos antes:
 from categories_api.models import Category 
-from categories_api.serializers import CategorySerializer 
+from categories_api.serializers import CategoriesRequestSerializer, CategoriesResponseSerializer
 # --- Parámetros de Swagger para el método GET de lista ---
 # Define los parámetros manuales aquí, para ser usados en el decorador @swagger_auto_schema
 category_list_get_params = [
@@ -33,7 +33,7 @@ class CategoryListCreateView(APIView):
         # Aquí usamos manual_parameters para el filtro 'is_active'
         manual_parameters=category_list_get_params,
         responses={
-            200: CategorySerializer(many=True), # Respuesta para la lista
+            200: CategoriesResponseSerializer(many=True), # Respuesta para la lista
             400: "Solicitud inválida"
         }
     )
@@ -52,16 +52,16 @@ class CategoryListCreateView(APIView):
         else:
             categories = Category.objects.all()
 
-        serializer = CategorySerializer(categories, many=True)
+        serializer = CategoriesResponseSerializer(categories, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @swagger_auto_schema(
         tags=['Categories'],
         operation_description="Crea una nueva categoría.",
         # Usa el serializador directamente para la estructura del cuerpo de la solicitud
-        request_body=CategorySerializer,
+        request_body=CategoriesRequestSerializer,
         responses={
-            201: CategorySerializer(), # Respuesta para la categoría creada
+            201: CategoriesRequestSerializer(), # Respuesta para la categoría creada
             400: "Datos inválidos"
         }
     )
@@ -69,7 +69,7 @@ class CategoryListCreateView(APIView):
         """
         Crea una nueva categoría.
         """
-        serializer = CategorySerializer(data=request.data)
+        serializer = CategoriesRequestSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -86,7 +86,7 @@ class CategoryDetailView(APIView):
         tags=['Categories'],
         operation_description="Obtiene los detalles de una categoría específica por ID.",
         responses={
-            200: CategorySerializer(),
+            200: CategoriesRequestSerializer(),
             404: "Categoría no encontrada"
         }
     )
@@ -99,15 +99,15 @@ class CategoryDetailView(APIView):
         except Category.DoesNotExist:
             return Response({"detail": "Categoría no encontrada."}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = CategorySerializer(category)
+        serializer = CategoriesResponseSerializer(category)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @swagger_auto_schema(
         tags=['Categories'],
         operation_description="Actualiza una categoría existente por ID.",
-        request_body=CategorySerializer,
+        request_body=CategoriesResponseSerializer,
         responses={
-            200: CategorySerializer(),
+            200: CategoriesResponseSerializer(),
             400: "Datos inválidos",
             404: "Categoría no encontrada"
         }
@@ -121,7 +121,7 @@ class CategoryDetailView(APIView):
         except Category.DoesNotExist:
             return Response({"detail": "Categoría no encontrada."}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = CategorySerializer(category, data=request.data, partial=False) # partial=False para PUT (actualización completa)
+        serializer = CategoriesResponseSerializer(category, data=request.data, partial=False) # partial=False para PUT (actualización completa)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -130,9 +130,9 @@ class CategoryDetailView(APIView):
     @swagger_auto_schema(
         tags=['Categories'],
         operation_description="Actualiza parcialmente una categoría existente por ID.",
-        request_body=CategorySerializer, # Puede ser el mismo serializador, DRF manejará los campos parciales
+        request_body=CategoriesResponseSerializer, # Puede ser el mismo serializador, DRF manejará los campos parciales
         responses={
-            200: CategorySerializer(),
+            200: CategoriesResponseSerializer(),
             400: "Datos inválidos",
             404: "Categoría no encontrada"
         }
@@ -146,7 +146,7 @@ class CategoryDetailView(APIView):
         except Category.DoesNotExist:
             return Response({"detail": "Categoría no encontrada."}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = CategorySerializer(category, data=request.data, partial=True) # partial=True para PATCH (actualización parcial)
+        serializer = CategoriesResponseSerializer(category, data=request.data, partial=True) # partial=True para PATCH (actualización parcial)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
