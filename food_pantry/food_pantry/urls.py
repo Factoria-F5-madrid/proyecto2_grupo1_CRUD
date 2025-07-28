@@ -43,6 +43,7 @@ urlpatterns = [
     path('food_pantry/api/v1/', include(
         [
             path('beneficiaries/', include('beneficiaries_api.urls')),
+            path('categories/', include('categories_api.urls')),
             path('donors/', include('donors_api.urls')),
             path('products/', include('products_api.urls')),
             path('volunteers/', include('volunteers_api.urls')),
