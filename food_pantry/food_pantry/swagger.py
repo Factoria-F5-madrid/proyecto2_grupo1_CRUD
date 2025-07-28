@@ -18,6 +18,10 @@ class CustomOpenAPISchemaGenerator(OpenAPISchemaGenerator):
                 "description": "List of all APIs available for beneficiary operations."
             },
             {
+                "name": "Categories",
+                "description": "List of all APIs available for category operations."
+            },
+            {
                 "name": "Donors",
                 "description": "List of all APIs available for donor operations."
             },
