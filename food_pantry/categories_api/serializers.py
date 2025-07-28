@@ -11,5 +11,5 @@ class CategoriesRequestSerializer(serializers.ModelSerializer):
 class CategoriesResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['name', 'description',]
+        fields = ['id', 'name', 'description',]
         read_only_fields = ['id'] 

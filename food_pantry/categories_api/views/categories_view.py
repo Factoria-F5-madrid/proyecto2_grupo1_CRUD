@@ -127,30 +127,30 @@ class CategoryDetailView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @swagger_auto_schema(
-        tags=['Categories'],
-        operation_description="Actualiza parcialmente una categoría existente por ID.",
-        request_body=CategoriesResponseSerializer, # Puede ser el mismo serializador, DRF manejará los campos parciales
-        responses={
-            200: CategoriesResponseSerializer(),
-            400: "Datos inválidos",
-            404: "Categoría no encontrada"
-        }
-    )
-    def patch(self, request: Request, pk: int, *args, **kwargs) -> Response:
-        """
-        Actualiza parcialmente una categoría existente.
-        """
-        try:
-            category = Category.objects.get(pk=pk)
-        except Category.DoesNotExist:
-            return Response({"detail": "Categoría no encontrada."}, status=status.HTTP_404_NOT_FOUND)
+    # @swagger_auto_schema(
+    #     tags=['Categories'],
+    #     operation_description="Actualiza parcialmente una categoría existente por ID.",
+    #     request_body=CategoriesResponseSerializer, # Puede ser el mismo serializador, DRF manejará los campos parciales
+    #     responses={
+    #         200: CategoriesResponseSerializer(),
+    #         400: "Datos inválidos",
+    #         404: "Categoría no encontrada"
+    #     }
+    # )
+    # def patch(self, request: Request, pk: int, *args, **kwargs) -> Response:
+    #     """
+    #     Actualiza parcialmente una categoría existente.
+    #     """
+    #     try:
+    #         category = Category.objects.get(pk=pk)
+    #     except Category.DoesNotExist:
+    #         return Response({"detail": "Categoría no encontrada."}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = CategoriesResponseSerializer(category, data=request.data, partial=True) # partial=True para PATCH (actualización parcial)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #     serializer = CategoriesResponseSerializer(category, data=request.data, partial=True) # partial=True para PATCH (actualización parcial)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_200_OK)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @swagger_auto_schema(
         tags=['Categories'],
