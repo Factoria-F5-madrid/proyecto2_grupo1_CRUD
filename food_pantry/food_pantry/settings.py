@@ -11,10 +11,30 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv # Load environment variables from .env file
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Logger settings
+LOG_SETTINGS={
+    "file_name": os.getenv("LOG_FILE_NAME", "food_pantry"),
+    "file_log_level": os.getenv("LOG_FILE_LEVEL", "DEBUG"),
+    "stdout_log_level": os.getenv("LOG_STDOUT_LEVEL", "ERROR"),
+    'log_dir': os.path.join(BASE_DIR, 'logs'),
+    'log_files': {
+        'default': f"{os.getenv('LOG_FILE_NAME', 'food_pantry')}.log",
+        'general': f"{os.getenv('LOG_FILE_NAME', 'food_pantry')}.log",
+        'scripts': 'scripts.log',
+        'tests': f"{os.getenv('LOG_FILE_NAME', 'food_pantry')}.log",  # Logs de tests → food_pantry.log
+        'populate_db': 'populate_db.log',
+        'clean_db': 'clean_db.log',
+    }
+}
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -31,7 +51,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'food_pantry_app',              # Your food pantry app
     'donors_api',                   # All API related operations for the Donor table
     'categories_api',               # All API related operations for the Category table
     'products_api',                 # All API related operations for the Product table
@@ -48,6 +67,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_yasg',  # For Swagger documentation
+    'fixtures',  # Custom app for fixtures management for cleaning and populating the database
 ]
 
 SWAGGER_SETTINGS = {
@@ -58,6 +78,7 @@ SWAGGER_SETTINGS = {
     },
     'DEFAULT_MODEL_RENDERING': 'example',
 }
+SWAGGER_USE_COMPAT_RENDERERS = False
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

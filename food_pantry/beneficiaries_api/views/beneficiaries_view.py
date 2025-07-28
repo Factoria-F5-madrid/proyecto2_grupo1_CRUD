@@ -6,8 +6,9 @@ from drf_yasg.utils import swagger_auto_schema
 
 from beneficiaries_api.serializer import BeneficiaryRequestSerializer, BeneficiaryResponseSerializer
 from beneficiaries_api.models import Beneficiary
+from common.logger import Logger
 
-class BeneficiariesView(APIView):
+class BeneficiariesView(Logger, APIView):
     @swagger_auto_schema(
         tags=['Beneficiaries'],
         operation_description="List all beneficiaries",
@@ -25,6 +26,7 @@ class BeneficiariesView(APIView):
         Returns:
             Response: The response
         """
+        self.debug(f"Getting all beneficiaries.")
         beneficiaries = Beneficiary.objects.all().values()
         response = BeneficiaryResponseSerializer(beneficiaries, many = True)
         return Response(response.data, status=status.HTTP_200_OK)
@@ -47,9 +49,13 @@ class BeneficiariesView(APIView):
         Returns:
             Response: The response
         """
+        self.debug(f"Creating a beneficiary:  {request.data}.")
         data = BeneficiaryRequestSerializer(data=request.data)
+
         
         if data.is_valid():
             data.save()
             return Response(data.data, status=status.HTTP_201_CREATED)
+        
+        self.debug(f"Data validation failed.")
         return Response(data.errors, status=status.HTTP_400_BAD_REQUEST)
