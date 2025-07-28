@@ -1,0 +1,50 @@
+from drf_yasg.generators import OpenAPISchemaGenerator
+
+class CustomOpenAPISchemaGenerator(OpenAPISchemaGenerator):
+    def get_schema(self, request=None, public=False):
+        """_summary_
+
+        Args:
+            request (_type_, optional): _description_. Defaults to None.
+            public (bool, optional): _description_. Defaults to False.
+
+        Returns:
+            _type_: _description_
+        """
+        swagger = super().get_schema(request, public)
+        swagger.tags = [
+            {
+                "name": "Beneficiaries",
+                "description": "List of all APIs available for beneficiary operations."
+            },
+            {
+                "name": "Categories",
+                "description": "List of all APIs available for category operations."
+            },
+            {
+                "name": "Donors",
+                "description": "List of all APIs available for donor operations."
+            },
+            {
+                "name": "Deliveries",
+                "description": "List of all APIs available for delivery operations."
+            },
+            {
+                "name": "Products",
+                "description": "List of all APIs available for product operations."
+            },
+            {
+                "name": "Volunteers",
+                "description": "List of all APIs available for volunteer operations."
+            },
+            {
+                "name": "Delivery Products",
+                "description": "List of all APIs available for delivery product operations."
+            },
+            {
+                "name": "Volunteer Deliveries",
+                "description": "List of all APIs available for volunteer delivery operations."
+            }
+            
+        ]
+        return swagger
