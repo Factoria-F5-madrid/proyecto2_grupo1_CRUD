@@ -40,10 +40,18 @@ pip install -r requirements.txt
 4. Aplicar migraciones
 
 ```
+python manage.py makemigrations
 python manage.py migrate
 ```
 
-5. Ejecutar el servidor de desarollo
+5. Popular la base de datos con datos de prueba
+
+```
+python manage.py rebuild_db
+```
+
+
+6. Ejecutar el servidor de desarollo
 
 ```
 python manage.py runserver
