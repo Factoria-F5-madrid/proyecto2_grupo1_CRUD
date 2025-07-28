@@ -13,6 +13,11 @@ Permite administrar beneficiarios, donaciones, entregas y el inventario de produ
 - HTML/CSS (interfaz básica del admin de Django)
 - Git y GitHub
 
+Para la parte de la aplicación web (en desarrollo):
+
+- Node.js
+- React
+
 ---
 
 ## Instalación
@@ -96,6 +101,24 @@ food_pantry/
 ## Esquema de Base de Datos
 
 El modelo de base de datos de la aplicación **Food Pantry** ha sido diseñado para cubrir funcionalidades clave como entregas a beneficiarios, control de inventario de productos, coordinación de voluntarios y seguimiento de donantes.
+
+## Instalación de la aplicación web
+
+La aplicación web se puede encontrar en la carpeta `food-pantry-web`. 
+
+1. Instalar, si no lo esta, node.js. Seguir las intrucciones [en la página web de node.js](https://nodejs.org) en caso de tener dudas o preguntas sobre como instalarlo (en linux, `sudo apt install nodejs` debería de ser suficiente).
+
+2. Ir a la carpeta `food-pantry-web`
+
+3. Instalar dependencias
+
+`npm install`
+
+4. Ejecutar la aplicación
+
+`npm start`
+
+5. La página web deberia de estar disponible en `localhost:3000`
 
 ### Tablas o entidades
 
@@ -191,10 +214,10 @@ pytest --cov
 
 ## Equipo de desarollo
 
-  - Óscar Rodríguez - Coordinador general
-  - Ciprian Nica - Back
-  - Aroa Mateo - Front
-  - Alfonso Bermúdez - BD y Documentación
+  - Óscar Rodríguez - Scrum Master/Developer
+  - Ciprian Nica - Developer
+  - Aroa Mateo - Product Owner/Developer
+  - Alfonso Bermúdez - Developer
 
 ## Estado del proyecto
 Este sistema se encuentra actualmente en desarrollo como parte de una entrega académica
