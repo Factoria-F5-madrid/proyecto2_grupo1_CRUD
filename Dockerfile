@@ -49,11 +49,9 @@ USER root
 RUN rm -rf /app/.coverage
 RUN rm -rf /app/food_pantry/.coverage
 RUN rm -rf /app/food_pantry/logs
-RUN mkdir /app/food_pantry/logs
-RUN chmod 775 /app/food_pantry/logs
-RUN chown -R root:appuser /app
-RUN chmod 664 /app/food_pantry/db.sqlite3
+RUN chown -R appuser:appuser /app/food_pantry
 USER appuser
+RUN mkdir /app/food_pantry/logs
 
 # Expose the port that the application listens on.
 EXPOSE 8000
