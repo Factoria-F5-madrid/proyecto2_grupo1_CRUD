@@ -44,6 +44,15 @@ USER appuser
 # Copy the source code into the container.
 COPY . .
 
+# Fix app permissions
+USER root
+RUN rm -rf /app/.coverage
+RUN rm -rf /app/food_pantry/.coverage
+RUN rm -rf /app/food_pantry/logs
+RUN chown -R appuser:appuser /app/food_pantry
+USER appuser
+RUN mkdir /app/food_pantry/logs
+
 # Expose the port that the application listens on.
 EXPOSE 8000
 
